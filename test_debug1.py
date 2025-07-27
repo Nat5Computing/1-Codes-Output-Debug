@@ -1,7 +1,18 @@
 import subprocess
 
 def test_debug_1():
-    result = subprocess.run(["python3", "debug_1.py"], capture_output=True, text=True)
+    try:
+        result = subprocess.run(["python3", "debug_1.py"], capture_output=True, text=True)
+        if result.returncode != 0:
+            print("❌ Debug 1: Your program crashed and could not run.")
+            print("🔧 Error message:")
+            print(result.stderr.strip())
+            return
+    except Exception as e:
+        print("❌ Debug 1: Something went wrong while running your code.")
+        print(f"Error: {e}")
+        return
+
     output = result.stdout.strip()
 
     if "you are amazing" in output.lower():
