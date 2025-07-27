@@ -1,7 +1,18 @@
 import subprocess
 
 def test_debug_2():
-    result = subprocess.run(["python3", "debug_2.py"], capture_output=True, text=True)
+    try:
+        result = subprocess.run(["python3", "debug_2.py"], capture_output=True, text=True)
+        if result.returncode != 0:
+            print("❌ Debug 2: Your program crashed and could not run.")
+            print("🔧 Error message:")
+            print(result.stderr.strip())
+            return
+    except Exception as e:
+        print("❌ Debug 2: Something went wrong while running your code.")
+        print(f"Error: {e}")
+        return
+
     output = result.stdout.strip().lower()
 
     checks = {
